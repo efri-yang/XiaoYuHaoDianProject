@@ -15,9 +15,12 @@ border-spacing: 0;
 }
 body, button,select,  textarea  {
 font: 14px/1.5 '\5FAE\8F6F\96C5\9ED1',Tahoma,Arial,Helvetica,sans-serif;
+
+/*font: 14px/1.5 SimSun,"Arial Narrow",HELVETICA*/
 }
 input{
 	font-family:'\5FAE\8F6F\96C5\9ED1',Tahoma,Arial,Helvetica,sans-serif;
+/*	font: 14px/1.5 SimSun,"Arial Narrow",HELVETICA*/
 }
 button, input, select, textarea {
 font-size: 100%;
@@ -33,7 +36,7 @@ content: '';
 content: none;
 }
 a {
-color:#0066cc;
+color:#92764a;
 text-decoration: none;
 }
 a:hover {
@@ -97,6 +100,24 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
 html {
 	overflow-y: scroll;
 }
+
+.mt5{
+	margin-top: 5px;
+}
+.mt10{
+	margin-top: 10px;
+}
+.mt15{
+	margin-top: 15px;
+}
+.mt20{
+	margin-top: 20px;
+}
+.mt25{
+	margin-top: 25px;
+}
+
+
 
 
 
