@@ -1,5 +1,7 @@
 <?php
-
+for($i=0;$i<2000000;$i++){
+	$j+=1;
+}
 $page=$_GET["page"];
 $number=20;
 $start=($page-1)*$number;
