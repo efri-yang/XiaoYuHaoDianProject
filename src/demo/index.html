@@ -335,38 +335,47 @@
     })(jQuery);
 
     $(function(){
+        $numCount=20; //每页请求几条数据
     	$('.rank-list-info').infiniteScroll({
     		path: function() {
-			   if(this.loadCount < 4){
 			   	var pageNumber = ( this.loadCount + 1 );
-			  	return 'http://wnworld.com/api/page.php?page=' + pageNumber;
-			   }else{
-			   	  console.dir(this.loadOnScroll)
-			   }
+			  	return 'http://wnworld.com/api/page.php?count='+$numCount+'&page=' + pageNumber;
 			},
     		append: false,
     		responseType: 'json',
     		history: false,
-    		checkLastPage:true,
+    		checkLastPage:false,
     		status: '.page-load-status'
     	});
-    	$('.rank-list-info').on( 'load.infiniteScroll', function( event, response ) {
-    		 	console.dir(response);
-		 		var str="";
-		 		for(var i=0;i<response.length;i++){
-		 			str+= '<li class="clearfix">'
-                    	str+='<div class="cols cols-1"><span class="num">'+response[i]["rank"]+'</span></div>'
-                    	str+='<div class="cols cols-2">'+response[i]["name"]+'</div>'
-	                    str+='<div class="cols cols-3">'+response[i]["taste"]+'</div>'
-	                    str+='<div class="cols cols-4">'+response[i]["service"]+'</div>'
-	                    str+='<div class="cols cols-5">'+response[i]["environment"]+'</div>'
-	                    str+='<div class="cols cols-6">'+response[i]["goodcomment"]+'</div>'
-	                    str+='<div class="cols cols-7">'+response[i]["badcomment"]+'</div>'
-                   		str+='<div class="cols cols-8"><span class="zs">'+response[i]["heat"]+'</span></div>'
-                	str+='</li>';
-		 		}
-		 		$('.rank-list-info').infiniteScroll( 'appendItems',$(str));
-		});
+
+       
+
+        function onInfiniteScrollLoad(event, response){
+                
+                var str="";
+                for(var i=0;i<response.length;i++){
+                    str+= '<li class="clearfix">'
+                        str+='<div class="cols cols-1"><span class="num">'+response[i]["rank"]+'</span></div>'
+                        str+='<div class="cols cols-2">'+response[i]["name"]+'</div>'
+                        str+='<div class="cols cols-3">'+response[i]["taste"]+'</div>'
+                        str+='<div class="cols cols-4">'+response[i]["service"]+'</div>'
+                        str+='<div class="cols cols-5">'+response[i]["environment"]+'</div>'
+                        str+='<div class="cols cols-6">'+response[i]["goodcomment"]+'</div>'
+                        str+='<div class="cols cols-7">'+response[i]["badcomment"]+'</div>'
+                        str+='<div class="cols cols-8"><span class="zs">'+response[i]["heat"]+'</span></div>'
+                    str+='</li>';
+                }
+                $('.rank-list-info').infiniteScroll( 'appendItems',$(str));
+                if(response.length<$numCount){
+                     $('.rank-list-info').infiniteScroll( 'option', {
+                      loadOnScroll: false,
+
+                    });
+                }
+        }
+
+       
+    	$('.rank-list-info').on( 'load.infiniteScroll',onInfiniteScrollLoad);
 		$('.rank-list-info').infiniteScroll('loadNextPage')
     })
     </script>
