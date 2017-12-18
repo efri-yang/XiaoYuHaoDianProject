@@ -1,9 +1,7 @@
 <?php
-for($i=0;$i<2000000;$i++){
-	$j+=1;
-}
+
 $page=$_GET["page"];
-$number=$_GET['count'];
+$number=20;
 $start=($page-1)*$number;
 $end=$page*$number;
 $arr=array();

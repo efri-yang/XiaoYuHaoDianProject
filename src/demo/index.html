@@ -335,22 +335,26 @@
     })(jQuery);
 
     $(function(){
-        $numCount=20; //每页请求几条数据
+    	$maxPage=4;
     	$('.rank-list-info').infiniteScroll({
     		path: function() {
-			   	var pageNumber = ( this.loadCount + 1 );
-			  	return 'http://wnworld.com/api/page.php?count='+$numCount+'&page=' + pageNumber;
+    			if($maxPage < 4){
+    				var pageNumber = ( this.loadCount + 1 );
+			  		return 'http://wnworld.com/api/page.php?page=' + pageNumber;
+    			}
+			   	
 			},
     		append: false,
     		responseType: 'json',
     		history: false,
-    		checkLastPage:false,
     		status: '.page-load-status'
     	});
+    	$('.rank-list-info').on( 'load.infiniteScroll',onInfiniteScrollLoad);
+		$('.rank-list-info').infiniteScroll('loadNextPage');
+		var infScroll = $('.container').data('infiniteScroll');
 
-       
-
-        function onInfiniteScrollLoad(event, response){
+		console.dir()
+		 function onInfiniteScrollLoad(event, response){
                 
                 var str="";
                 for(var i=0;i<response.length;i++){
@@ -366,17 +370,13 @@
                     str+='</li>';
                 }
                 $('.rank-list-info').infiniteScroll( 'appendItems',$(str));
-                if(response.length<$numCount){
+                if(response.length<$maxPage){
                      $('.rank-list-info').infiniteScroll( 'option', {
                       loadOnScroll: false,
 
                     });
                 }
         }
-
-       
-    	$('.rank-list-info').on( 'load.infiniteScroll',onInfiniteScrollLoad);
-		$('.rank-list-info').infiniteScroll('loadNextPage')
     })
     </script>
 </body>
