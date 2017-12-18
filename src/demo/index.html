@@ -338,7 +338,7 @@
     	$('.rank-list-info').infiniteScroll({
     		path: function() {
 			  var pageNumber = ( this.loadCount + 1 );
-			  return 'page.php?page=' + pageNumber;
+			  return 'http://localhost/XiaoYuHaoDianProject/src/demo/page.php?page=' + pageNumber;
 			},
     		append: false,
     		responseType: 'text',
@@ -348,6 +348,9 @@
 
     	var infScroll = $('.rank-list-info').data('infiniteScroll');
     	// console.log( 'Infinite scroll at page' + infScroll.pageIndex );
+    	$('.rank-list-info').on( 'request.infiniteScroll', function( event, path ) {
+		  console.log( 'Loading page: ' + path );
+		});
     	$('.rank-list-info').on( 'load.infiniteScroll', function( event, response ) {
     		 	var data = JSON.parse( response );
 
