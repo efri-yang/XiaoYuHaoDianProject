@@ -72,7 +72,7 @@
                 </ul>
             </div>
             <ul class="rank-list rank-list-info">
-                <li class="clearfix">
+                <!-- <li class="clearfix">
                     <div class="cols cols-1"><span class="num first">1</span></div>
                     <div class="cols cols-2">
                         <p class="name">小王烧烤</p>
@@ -273,15 +273,15 @@
                     <div class="cols cols-6">98%</div>
                     <div class="cols cols-7">0.2%</div>
                     <div class="cols cols-8"><span class="zs">895</span></div>
-                </li>
+                </li> -->
             </ul>
 
             <div class="page-load-status">
-			  <p class="infinite-scroll-request">
-					<div class="coms-load-more">
+			  <div class="infinite-scroll-request">
+					<p class="coms-load-more">
 		                <i class="pic"></i>
-		            </div>
-			  </p>
+		            </p>
+			  </div>
 			  <p class="infinite-scroll-last">End of content</p>
 			  <p class="infinite-scroll-error">No more pages to load</p>
 			</div>
@@ -337,38 +337,37 @@
     $(function(){
     	$('.rank-list-info').infiniteScroll({
     		path: function() {
-			  var pageNumber = ( this.loadCount + 1 );
-			  return 'http://localhost/XiaoYuHaoDianProject/src/demo/page.php?page=' + pageNumber;
+			   if(this.loadCount < 4){
+			   	var pageNumber = ( this.loadCount + 1 );
+			  	return 'http://wnworld.com/api/page.php?page=' + pageNumber;
+			   }else{
+			   	  console.dir(this.loadOnScroll)
+			   }
 			},
     		append: false,
-    		responseType: 'text',
+    		responseType: 'json',
     		history: false,
+    		checkLastPage:true,
     		status: '.page-load-status'
     	});
-
-    	var infScroll = $('.rank-list-info').data('infiniteScroll');
-    	// console.log( 'Infinite scroll at page' + infScroll.pageIndex );
-    	$('.rank-list-info').on( 'request.infiniteScroll', function( event, path ) {
-		  console.log( 'Loading page: ' + path );
-		});
     	$('.rank-list-info').on( 'load.infiniteScroll', function( event, response ) {
-    		 	var data = JSON.parse( response );
-
+    		 	console.dir(response);
 		 		var str="";
-		 		for(var i=0;i<data.length;i++){
+		 		for(var i=0;i<response.length;i++){
 		 			str+= '<li class="clearfix">'
-                    	str+='<div class="cols cols-1"><span class="num">'+data[i]["rank"]+'</span></div>'
-                    	str+='<div class="cols cols-2">'+data[i]["name"]+'</div>'
-	                    str+='<div class="cols cols-3">'+data[i]["kw"]+'</div>'
-	                    str+='<div class="cols cols-4">'+data[i]["fw"]+'</div>'
-	                    str+='<div class="cols cols-5">'+data[i]["hj"]+'</div>'
-	                    str+='<div class="cols cols-6">'+data[i]["hp"]+'</div>'
-	                    str+='<div class="cols cols-7">'+data[i]["cp"]+'</div>'
-                   		str+='<div class="cols cols-8"><span class="zs">'+data[i]["zs"]+'</span></div>'
+                    	str+='<div class="cols cols-1"><span class="num">'+response[i]["rank"]+'</span></div>'
+                    	str+='<div class="cols cols-2">'+response[i]["name"]+'</div>'
+	                    str+='<div class="cols cols-3">'+response[i]["taste"]+'</div>'
+	                    str+='<div class="cols cols-4">'+response[i]["service"]+'</div>'
+	                    str+='<div class="cols cols-5">'+response[i]["environment"]+'</div>'
+	                    str+='<div class="cols cols-6">'+response[i]["goodcomment"]+'</div>'
+	                    str+='<div class="cols cols-7">'+response[i]["badcomment"]+'</div>'
+                   		str+='<div class="cols cols-8"><span class="zs">'+response[i]["heat"]+'</span></div>'
                 	str+='</li>';
 		 		}
 		 		$('.rank-list-info').infiniteScroll( 'appendItems',$(str));
 		});
+		$('.rank-list-info').infiniteScroll('loadNextPage')
     })
     </script>
 </body>
