@@ -1,5 +1,5 @@
 <?php
 	$array=array(
-		array("rank"=>1,"name"=>"小王烧烤","taste")
+		array("rank"=>1,"name"=>"小王烧烤","taste"=>"9.0",)
 	)
 ?>
