@@ -118,7 +118,10 @@
 			color:#fff;
 			cursor:pointer;
 			border-radius:3px;
-			margin-top:5px;  
+			margin-top:5px; 
+			&:hover{
+				background:darken(#d3c8b7,5%) 
+			} 
 		}
 
 	}

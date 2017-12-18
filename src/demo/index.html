@@ -11,6 +11,7 @@
 
      <script type="text/javascript" src="js/jquery.ba-throttle-debounce.js"></script>
      <script type="text/javascript" src="js/infinite-scroll.pkgd.js"></script>
+     <!--[if lt IE 8]> <script src="js/json2.js"></script> <![endif]-->
 </head>
 
 <body>
@@ -21,8 +22,8 @@
 				<a href="#">好店</a>
 			</h1>
             <ul class="header-nav">
-                <li class="current"><a href="#">好店榜单</a></li>
-                <li><a href="#">关于好店</a></li>
+                <li class="current"><a href="index.html">好店榜单</a></li>
+                <li><a href="GuanYuWoMen.html">关于好店</a></li>
             </ul>
         </div>
     </div>
@@ -276,13 +277,15 @@
             </ul>
 
             <div class="page-load-status">
-  <p class="infinite-scroll-request">Loading...</p>
-  <p class="infinite-scroll-last">End of content</p>
-  <p class="infinite-scroll-error">No more pages to load</p>
-</div>
-            <div class="coms-load-more">
-                <i class="pic"></i>
-            </div>
+			  <p class="infinite-scroll-request">
+					<div class="coms-load-more">
+		                <i class="pic"></i>
+		            </div>
+			  </p>
+			  <p class="infinite-scroll-last">End of content</p>
+			  <p class="infinite-scroll-error">No more pages to load</p>
+			</div>
+            
 
             
         </div>
@@ -333,20 +336,36 @@
 
     $(function(){
     	$('.rank-list-info').infiniteScroll({
-    		path: 'page.php?page={{#}}',
+    		path: function() {
+			  var pageNumber = ( this.loadCount + 1 );
+			  return 'page.php?page=' + pageNumber;
+			},
     		append: false,
-    		scrollThreshold: 100,
     		responseType: 'text',
     		history: false,
     		status: '.page-load-status'
     	});
 
+    	var infScroll = $('.rank-list-info').data('infiniteScroll');
+    	// console.log( 'Infinite scroll at page' + infScroll.pageIndex );
     	$('.rank-list-info').on( 'load.infiniteScroll', function( event, response ) {
-		 		console.dir(response);
-		 		$('.rank-list-info').infiniteScroll( 'appendItems',$('.rank-list-info').children('li'));
-		});
+    		 	var data = JSON.parse( response );
 
-		$('.rank-list-info').infiniteScroll('loadNextPage');
+		 		var str="";
+		 		for(var i=0;i<data.length;i++){
+		 			str+= '<li class="clearfix">'
+                    	str+='<div class="cols cols-1"><span class="num">'+data[i]["rank"]+'</span></div>'
+                    	str+='<div class="cols cols-2">'+data[i]["name"]+'</div>'
+	                    str+='<div class="cols cols-3">'+data[i]["kw"]+'</div>'
+	                    str+='<div class="cols cols-4">'+data[i]["fw"]+'</div>'
+	                    str+='<div class="cols cols-5">'+data[i]["hj"]+'</div>'
+	                    str+='<div class="cols cols-6">'+data[i]["hp"]+'</div>'
+	                    str+='<div class="cols cols-7">'+data[i]["cp"]+'</div>'
+                   		str+='<div class="cols cols-8"><span class="zs">'+data[i]["zs"]+'</span></div>'
+                	str+='</li>';
+		 		}
+		 		$('.rank-list-info').infiniteScroll( 'appendItems',$(str));
+		});
     })
     </script>
 </body>
