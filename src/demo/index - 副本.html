@@ -4,17 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>好店榜单</title>
-
-    <!-- 网站公共会用到静态资源 -->
     <link rel="stylesheet" type="text/css" href="css/base.css">
     <link rel="stylesheet" type="text/css" href="css/common.css">
-    <script type="text/javascript" src="js/jquery/jquery-1.12.4.min.js"></script>
-    
-    
-
-
-    <!-- 首页静态资源 -->
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery/jquery-1.12.4.min.js"></script>
+
     <script type="text/javascript" src="js/jquery.ba-throttle-debounce.js"></script>
     <script type="text/javascript" src="js/infinite-scroll.pkgd.js"></script>
     <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
@@ -38,7 +32,7 @@
         <div class="gsrank-aside-wrapper" id="J_gsrank-aside-wrapper">
             <div class="gsrank-aside-box">
                 <p class="caption">好店分类</p>
-                <div class="list" id="J_mContent_scroller">
+                <div class="list">
                     <ul>
                         <li class="current"><a href="#">烧烤<i></i></a></li>
                         <li><a href="#">火锅<i></i></a></li>
@@ -56,13 +50,13 @@
                         <li><a href="#">海鲜<i></i></a></li>
                         <li><a href="#">东北菜<i></i></a></li>
                         <li><a href="#">测试测试测试测试01<i></i></a></li>
-                        <li><a href="#">测试测试测试测试02<i></i></a></li>
-                        <li><a href="#">测试测试测试测试03<i></i></a></li>
-                        <li><a href="#">测试测试测试测试04<i></i></a></li>
-                        <li><a href="#">测试测试测试测试05<i></i></a></li>
-                        <li><a href="#">测试测试测试测试06<i></i></a></li>
-                        <li><a href="#">测试测试测试测试07<i></i></a></li>
-                        <li><a href="#">测试测试测试测试08<i></i></a></li>
+                         <li><a href="#">测试测试测试测试02<i></i></a></li>
+                          <li><a href="#">测试测试测试测试03<i></i></a></li>
+                           <li><a href="#">测试测试测试测试04<i></i></a></li>
+                            <li><a href="#">测试测试测试测试05<i></i></a></li>
+                             <li><a href="#">测试测试测试测试06<i></i></a></li>
+                              <li><a href="#">测试测试测试测试07<i></i></a></li>
+                               <li><a href="#">测试测试测试测试08<i></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -313,7 +307,6 @@
     (function($) {
         $(function() {
             var $aside = $("#J_gsrank-aside-wrapper"),
-                $mScrollElem=$("#J_mContent_scroller"),
             	$asideScroll=$aside.find(".gsrank-aside-box"),
             	offsetTop = $aside.offset().top,
             	asideSH=$asideScroll.height(),
@@ -322,9 +315,8 @@
             var winH,remainH;
 
             function mCustomScrollInstance(){
-            	$mScrollElem.mCustomScrollbar({
+            	$aside.mCustomScrollbar({
 					theme:"minimal-dark",
-                    mouseWheel:{ preventDefault:true },
 					scrollInertia:400
 				});
             }
@@ -332,7 +324,6 @@
             function setH(){
             	if(remainH < asideSH){
             		$aside.css("height",remainH);
-                     $mScrollElem.css("height",remainH-39);
             		mCustomScrollInstance();
             	}
             }
